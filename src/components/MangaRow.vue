@@ -18,20 +18,39 @@ export default {
         category: {
             type: String,
             required: true
+        },
+        terms: {
+            type: String,
+            required: true
         }
     },
     setup(props) {
     let mangas = ref();
     let category = props.category;
-    console.log(category);
+    let name = props.terms;
     const getManga = async () => {
 
-        const result = await axios.get("https://kitsu.io/api/edge/anime?filter[categories]=" + category + "&page[limit]=5&page[offset]=0");
+        if(category && name){
+            const result = await axios.get("https://kitsu.io/api/edge/anime?filter[text]=" + name + "&filter[categories]=" + category + "page[limit]=5&page[offset]=0");
+            mangas.value = result.data.data;
+            
+        }else if(name){
+            const result = await axios.get("https://kitsu.io/api/edge/anime?filter[text]=" + name + "&page[limit]=5&page[offset]=0");
+            mangas.value = result.data.data;
+        }else if(category){
+            const result = await axios.get("https://kitsu.io/api/edge/anime?filter[categories]=" + category + "&page[limit]=5&page[offset]=0");
+            mangas.value = result.data.data;
+        }else {
+            const result = await axios.get("https://kitsu.io/api/edge/trending/anime");
+            mangas.value = result.data.data.slice(0,5);
+        }
+        
+        
 
-        mangas.value = result.data.data;
+
     }
 
-getManga();
+    getManga();
 
 
 
@@ -59,7 +78,7 @@ mangas
     }
 
     .manga-item:hover {
-        transform: rotate(10deg);
+        transform: rotate(5deg);
         
     }
 
