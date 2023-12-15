@@ -2,6 +2,7 @@
     <div class="manga-wrapper">
         <div class="manga-item" v-for="manga in mangas" :key="manga.id">
         <MangaCard :manga="manga" />
+        <manga-info/>
     </div>
     </div>
 
@@ -11,9 +12,10 @@
 import MangaCard from './MangaCard.vue';
 import { ref } from 'vue';
 import axios from "axios";
+import MangaInfo from './MangaInfo.vue';
 
 export default {
-    components: { MangaCard },
+    components: { MangaCard, MangaInfo },
     props: {
         category: {
             type: String,
@@ -71,15 +73,16 @@ mangas
     }
 
     .manga-item {
+        position: relative;
         width: fit-content;
         font-family: Poppins;
         transition: all .2s ease;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
 
-    .manga-item:hover {
-        transform: rotate(5deg);
-        
+
+    .manga-item:hover > .manga-info {
+        opacity: 1;
     }
 
     .manga-item p {
@@ -88,5 +91,18 @@ mangas
 
     .manga-item img {
         width: 150px;
+    }
+
+    .manga-info {
+        background: white;
+        position: absolute;
+        display: block;
+        opacity: 0;
+        right: -90px;
+        top: 90px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        z-index: 10;
+        border-radius: 10px;
+        transition: all .2s ease;
     }
 </style>
