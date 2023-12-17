@@ -2,7 +2,7 @@
     <div class="manga-wrapper">
         <div class="manga-item" v-for="manga in mangas" :key="manga.id">
         <MangaCard :manga="manga" />
-        <manga-info/>
+        <manga-info :manga="manga"/>
     </div>
     </div>
 
@@ -80,13 +80,8 @@ mangas
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
 
-
-    .manga-item:hover > .manga-info {
+    .manga-item:hover > .manga-info:not(:hover) {
         opacity: 1;
-    }
-
-    .manga-item p {
-        width: 150px;
     }
 
     .manga-item img {
@@ -94,15 +89,17 @@ mangas
     }
 
     .manga-info {
+        width: 280px;
         background: white;
         position: absolute;
         display: block;
         opacity: 0;
-        right: -90px;
+        right: -300px;
         top: 90px;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         z-index: 10;
         border-radius: 10px;
         transition: all .2s ease;
     }
+
 </style>
