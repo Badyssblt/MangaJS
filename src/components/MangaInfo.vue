@@ -29,7 +29,6 @@ export default {
       const getCategory = async () => {
         const result = await axios.get(manga.relationships.categories.links.related);
         categories.value = result.data.data.slice(0,3);
-        console.log(categories.value);
       }
 
       onMounted(getCategory);
@@ -48,23 +47,29 @@ export default {
 }
 
 .categories {
-  width: 200px;
+  width: 100%;
   display: flex;
   flex-direction: row;
+  gap: 10px;
 }
 
 .category {
+  height: fit-content;
+  text-align: center;
+  padding: 1px 5px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  background: #ED5586;
+  background: #252422;
   border-radius: 20px;
   font-size: .8em;
 }
 
 .category p {
   margin: 0;
+  color: white;
 }
 
 

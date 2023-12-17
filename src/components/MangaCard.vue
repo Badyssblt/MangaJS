@@ -12,9 +12,9 @@ export default {
 </script>
 
 <template>
-        <img :src="manga.attributes.posterImage.small" :alt="manga.attributes.canonicalTitle">
-        <p>{{ manga.attributes.titles.en_jp }}</p>
-  </template>
+    <img :src="manga.attributes.posterImage.small" :alt="manga.attributes.canonicalTitle">
+    <p>{{ manga.attributes.titles.en_jp }}</p>
+</template>
   
 
 <style>

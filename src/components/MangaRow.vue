@@ -1,16 +1,17 @@
 <template>
     <div class="manga-wrapper">
-        <div class="manga-item" v-for="manga in mangas" :key="manga.id">
-        <MangaCard :manga="manga" />
-        <manga-info :manga="manga"/>
-    </div>
+        <div class="manga-item" v-for="manga in mangas" :key="manga.id"
+            @mouseover="handleMouseOver" @mouseout="handleMouseOut">
+            <MangaCard :manga="manga" />
+            <manga-info :manga="manga" class="manga-info" @mouseover="handleInfoMouseOver" />
+        </div>
     </div>
 
 </template>
 
 <script>
 import MangaCard from './MangaCard.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from "axios";
 import MangaInfo from './MangaInfo.vue';
 
@@ -47,18 +48,52 @@ export default {
             mangas.value = result.data.data.slice(0,5);
         }
         
-        
-
-
     }
 
-    getManga();
+    const handleMouseOver = (event) => {
+        const mangaItem = event.target.closest('.manga-item');
+        if (mangaItem) {
+            const mangaInfo = mangaItem.querySelector('.manga-info');
+            mangaInfo.style.opacity = 1;
+        }
+    };
+
+    const handleMouseOut = (event) => {
+        const mangaItem = event.target.closest('.manga-item');
+        if (mangaItem) {
+            let mangaInfo = event.relatedTarget.closest('.manga-info');
+            if (mangaInfo) {
+                mangaInfo.style.opacity = 0;
+            } else {
+                const allMangaInfos = document.querySelectorAll('.manga-info');
+                allMangaInfos.forEach((info) => {
+                    info.style.opacity = 0;
+                });
+            }
+        }
+    };
+
+
+    const handleInfoMouseOver = (event) => {
+        event.stopPropagation();
+    };
 
 
 
-return {
-mangas
-}
+
+
+
+
+    onMounted(() => {
+        getManga();
+    })
+
+    return {
+    mangas,
+    handleMouseOver,
+    handleMouseOut,
+    handleInfoMouseOver
+    }
 
 
 }
@@ -80,15 +115,13 @@ mangas
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
 
-    .manga-item:hover > .manga-info:not(:hover) {
-        opacity: 1;
-    }
 
     .manga-item img {
         width: 150px;
     }
 
     .manga-info {
+        padding: 10px;
         width: 280px;
         background: white;
         position: absolute;

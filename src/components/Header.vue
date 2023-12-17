@@ -1,8 +1,8 @@
 <template>
   <menu>
-    <li>Accueil</li>
+    <li><a href="/">Accueil</a></li>
     <li>Manga</li>
-    <li>Anime</li>
+    <li><a href="/anime">Anime</a></li>
   </menu>
 </template>
 
